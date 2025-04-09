@@ -1,9 +1,20 @@
+#!/usr/bin/env python
+
+import logging
+import os
 import re
 from os.path import basename
 from dataclasses import dataclass
+import argparse
 
 import numpy as np
 import cv2
+from tqdm import tqdm
+
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s"
+)
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -25,23 +36,40 @@ def load(file: str) -> XRAYScan:
     return scan
 
 
-def create_dataset(files: list[str]):
+def create_dataset(files: list[str], output: str):
     features = []
     targets = []
-    for file in files:
+    logger.info("Extraction of features and targets from %d files", len(files))
+    for file in tqdm(files):
         scan = load(file)
         img = cv2.imread(scan.file, cv2.IMREAD_GRAYSCALE)
         features.append(cv2.resize(img, (1104, 760), interpolation=cv2.INTER_CUBIC))
-        targets.append(scan.detection)
+
+    logger.info("Saving dataset to %s", output)
+
+    features = np.array(features)
+    targets = np.array(targets)
 
     np.savez_compressed(
-        "datasets/processed/zoidberg.npz",
+        output,
         features=features,
         targets=targets,
     )
+    logger.info("Process completed !")
 
 
-def display_shapes(files: list[str]):
-    for file in files:
-        img = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
-        print(f"{file}: {img.shape}")
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Create dataset from x-ray scans")
+    parser.add_argument("dir", type=str, help="Directory containing x-ray scans")
+    parser.add_argument(
+        "--output",
+        "-o",
+        type=str,
+        help="Output file name",
+    )
+
+    args = parser.parse_args()
+    files = os.listdir(args.dir)
+    files = [os.path.join(args.dir, file) for file in files]
+
+    create_dataset(files, args.output)
