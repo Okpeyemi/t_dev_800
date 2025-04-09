@@ -5,3 +5,4 @@ __pycache__/
 *.pkl
 *.pdf
 t-dev-810.txt
+*.ipynb
