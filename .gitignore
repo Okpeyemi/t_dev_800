@@ -1,4 +1,5 @@
-datasets
+xrays
+chest_Xray.zip
 .ipynb_checkpoints
 *.pyc
 __pycache__/
@@ -6,3 +7,4 @@ __pycache__/
 *.pdf
 t-dev-810.txt
 *.ipynb
+!.gitkeep
