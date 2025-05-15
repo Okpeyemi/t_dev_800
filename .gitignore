@@ -8,3 +8,5 @@ __pycache__/
 t-dev-810.txt
 *.ipynb
 !.gitkeep
+*.onnx
+.venv
