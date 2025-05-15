@@ -1,4 +1,4 @@
-# Zoidberg 2.0 API
+# ahouefa API
 
 ## Run the server
 
