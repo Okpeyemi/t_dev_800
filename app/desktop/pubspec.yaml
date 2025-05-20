@@ -1,4 +1,4 @@
-name: ahouefa
+name: t_dev_800_app
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -30,6 +30,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  image_picker: ^0.8.7
+  provider: ^6.0.0
+  shared_preferences: ^2.2.0
+  http: ^0.13.5
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
