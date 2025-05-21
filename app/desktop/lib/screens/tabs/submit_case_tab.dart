@@ -293,33 +293,43 @@ class ImageLabelCard extends StatelessWidget {
               ],
             ),
             SizedBox(height: 12),
-            // Option 1: Limiter la hauteur avec un conteneur à taille fixe
-            Container(
-              height: 150, // Hauteur réduite (ajustez selon vos besoins)
-              alignment: Alignment.center,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.file(
-                  File(imageData.file.path),
-                  fit: BoxFit.cover,
+            // Image avec badge d'extension
+            Stack(
+              children: [
+                Container(
+                  height: 150,
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.file(
+                      File(imageData.file.path),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-              ),
+                // Badge pour le type de fichier
+                Positioned(
+                  left: 8,
+                  bottom: 8,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.6),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      _getFileExtension(imageData.file.name),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            
-            // Option 2 (alternative): Utiliser un SizedBox avec une largeur maximale
-            // SizedBox(
-            //   width: MediaQuery.of(context).size.width * 0.7, // 70% de la largeur de l'écran
-            //   child: AspectRatio(
-            //     aspectRatio: 16/12, // Ratio plus compact
-            //     child: ClipRRect(
-            //       borderRadius: BorderRadius.circular(8),
-            //       child: Image.file(
-            //         File(imageData.file.path),
-            //         fit: BoxFit.cover,
-            //       ),
-            //     ),
-            //   ),
-            // ),
             SizedBox(height: 16),
             Text(
               'Diagnostic:',
@@ -357,6 +367,10 @@ class ImageLabelCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getFileExtension(String fileName) {
+    return fileName.split('.').last.toUpperCase();
   }
 }
 

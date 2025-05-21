@@ -20,98 +20,228 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     
     return AppBar(
       automaticallyImplyLeading: automaticallyImplyLeading,
-      title: Text(title),
-      actions: [
-        // Bouton de thème
-        IconButton(
-          icon: Icon(
-            themeProvider.isDarkMode ? Icons.light_mode : Icons.dark_mode,
+      title: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.medical_information,
+            size: 24,
+            color: Theme.of(context).primaryColor,
           ),
-          tooltip: themeProvider.isDarkMode ? 'Passer en mode clair' : 'Passer en mode sombre',
-          onPressed: () {
-            themeProvider.toggleTheme();
-          },
+          SizedBox(width: 12),
+          Text(
+            title,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0.5,
+            ),
+          ),
+        ],
+      ),
+      elevation: 0,
+      backgroundColor: isDarkMode 
+          ? Colors.grey[900] 
+          : Colors.white,
+      shape: Border(
+        bottom: BorderSide(
+          color: isDarkMode ? Colors.grey[800]! : Colors.grey[300]!,
+          width: 1,
         ),
-        Row(
-          children: [
-            Text(authProvider.username),
-            SizedBox(width: 8),
-            PopupMenuButton<String>(
-              offset: Offset(0, 45),
-              icon: CircleAvatar(
-                child: Text(authProvider.username.isNotEmpty 
-                  ? authProvider.username[0].toUpperCase() 
-                  : 'U'),
+      ),
+      actions: [
+        // Bouton de thème avec animation
+        AnimatedContainer(
+          duration: Duration(milliseconds: 300),
+          decoration: BoxDecoration(
+            color: isDarkMode 
+                ? Colors.grey[800] 
+                : Colors.blue.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+          child: IconButton(
+            icon: AnimatedSwitcher(
+              duration: Duration(milliseconds: 300),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return ScaleTransition(scale: animation, child: child);
+              },
+              child: Icon(
+                themeProvider.isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                key: ValueKey<bool>(themeProvider.isDarkMode),
+                color: themeProvider.isDarkMode ? Colors.yellow : Colors.blue[800],
               ),
-              onSelected: (value) {
-                if (value == 'analyzed_images') {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UserHistoryScreen(
-                        historyType: HistoryType.analyzed,
+            ),
+            tooltip: themeProvider.isDarkMode ? 'Passer en mode clair' : 'Passer en mode sombre',
+            onPressed: () {
+              themeProvider.toggleTheme();
+            },
+          ),
+        ),
+        SizedBox(width: 8),
+        // Profil utilisateur
+        Container(
+          margin: EdgeInsets.only(right: 16),
+          child: Row(
+            children: [
+              if (MediaQuery.of(context).size.width > 600) // Afficher le nom uniquement sur les écrans plus larges
+                Padding(
+                  padding: const EdgeInsets.only(right: 12.0),
+                  child: Text(
+                    authProvider.username,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: isDarkMode ? Colors.grey[300] : Colors.grey[800],
+                    ),
+                  ),
+                ),
+              PopupMenuButton<String>(
+                offset: Offset(0, 45),
+                icon: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Theme.of(context).primaryColor.withOpacity(0.5),
+                      width: 2,
+                    ),
+                  ),
+                  child: CircleAvatar(
+                    backgroundColor: Theme.of(context).primaryColor.withOpacity(0.2),
+                    child: Text(
+                      authProvider.username.isNotEmpty 
+                        ? authProvider.username[0].toUpperCase() 
+                        : 'U',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
                       ),
                     ),
-                  );
-                } else if (value == 'submitted_cases') {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UserHistoryScreen(
-                        historyType: HistoryType.submitted,
+                  ),
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                color: isDarkMode ? Colors.grey[850] : Colors.white,
+                elevation: 4,
+                onSelected: (value) {
+                  if (value == 'analyzed_images') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserHistoryScreen(
+                          historyType: HistoryType.analyzed,
+                        ),
                       ),
+                    );
+                  } else if (value == 'submitted_cases') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserHistoryScreen(
+                          historyType: HistoryType.submitted,
+                        ),
+                      ),
+                    );
+                  } else if (value == 'logout') {
+                    authProvider.logout();
+                    Navigator.pushReplacementNamed(context, '/login');
+                  }
+                },
+                itemBuilder: (BuildContext context) => [
+                  PopupMenuItem<String>(
+                    value: 'analyzed_images',
+                    child: _buildMenuItem(
+                      context,
+                      Icons.photo_library,
+                      'Images analysées',
                     ),
-                  );
-                }
-              },
-              itemBuilder: (BuildContext context) => [
-                PopupMenuItem<String>(
-                  value: 'analyzed_images',
-                  child: Row(
-                    children: [
-                      Icon(Icons.photo_library, color: Theme.of(context).primaryColor),
-                      SizedBox(width: 8),
-                      Text('Images analysées'),
-                    ],
                   ),
-                ),
-                PopupMenuItem<String>(
-                  value: 'submitted_cases',
-                  child: Row(
-                    children: [
-                      Icon(Icons.folder_shared, color: Theme.of(context).primaryColor),
-                      SizedBox(width: 8),
-                      Text('Cas soumis'),
-                    ],
+                  PopupMenuItem<String>(
+                    value: 'submitted_cases',
+                    child: _buildMenuItem(
+                      context,
+                      Icons.folder_shared,
+                      'Cas soumis',
+                    ),
                   ),
-                ),
-                PopupMenuItem<String>(
-                  value: 'profile',
-                  child: Row(
-                    children: [
-                      Icon(Icons.person, color: Theme.of(context).primaryColor),
-                      SizedBox(width: 8),
-                      Text('Profil'),
-                    ],
+                  PopupMenuItem<String>(
+                    value: 'profile',
+                    child: _buildMenuItem(
+                      context,
+                      Icons.person,
+                      'Profil',
+                    ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(width: 16),
-            IconButton(
-              icon: Icon(Icons.logout),
-              onPressed: () async {
-                await authProvider.logout();
-                Navigator.pushReplacementNamed(context, '/login');
-              },
-            ),
-          ],
+                  PopupMenuDivider(),
+                  PopupMenuItem<String>(
+                    value: 'logout',
+                    child: _buildMenuItem(
+                      context,
+                      Icons.logout,
+                      'Déconnexion',
+                      isDestructive: true,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ],
-      bottom: bottom,
+      bottom: bottom != null 
+          ? PreferredSize(
+              preferredSize: Size.fromHeight(50), 
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: isDarkMode ? Colors.grey[800]! : Colors.grey[200]!,
+                      width: 1,
+                    ),
+                  ),
+                ),
+                child: bottom,
+              ),
+            )
+          : null,
+    );
+  }
+  
+  Widget _buildMenuItem(BuildContext context, IconData icon, String text, {bool isDestructive = false}) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    
+    return Row(
+      children: [
+        Container(
+          padding: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: isDestructive
+                ? Colors.red.withOpacity(0.1)
+                : Theme.of(context).primaryColor.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(
+            icon,
+            color: isDestructive
+                ? Colors.red
+                : Theme.of(context).primaryColor,
+            size: 20,
+          ),
+        ),
+        SizedBox(width: 12),
+        Text(
+          text,
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            color: isDestructive
+                ? Colors.red
+                : isDarkMode ? Colors.white : Colors.black87,
+          ),
+        ),
+      ],
     );
   }
 
