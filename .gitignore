@@ -9,3 +9,4 @@ t-dev-810.txt
 !.gitkeep
 *.onnx
 .venv
+.vscode
