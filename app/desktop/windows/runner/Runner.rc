@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "workker" "\0"
-            VALUE "FileDescription", "ahouefa" "\0"
+            VALUE "CompanyName", "com.example" "\0"
+            VALUE "FileDescription", "t_dev_800_app" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "ahouefa" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2025 workker. All rights reserved." "\0"
-            VALUE "OriginalFilename", "ahouefa.exe" "\0"
-            VALUE "ProductName", "ahouefa" "\0"
+            VALUE "InternalName", "t_dev_800_app" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
+            VALUE "OriginalFilename", "t_dev_800_app.exe" "\0"
+            VALUE "ProductName", "t_dev_800_app" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
