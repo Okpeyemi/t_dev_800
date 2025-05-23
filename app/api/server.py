@@ -4,10 +4,19 @@ from starlette.responses import JSONResponse
 from starlette.routing import Route
 
 from fs import FS
+from model import Model
+
+model = Model()
 
 
-async def predict():
-    return JSONResponse({"prediction": 1})
+async def predict(request: Request):
+    async with request.form(max_files=1) as form:
+        try:
+            scan = await form["scan"].read()
+            return JSONResponse(model.predict(scan))
+        except Exception as e:
+            print(e)
+            return JSONResponse({"scan": "You should submit a file"}, status_code=400)
 
 
 async def upload(request: Request):
