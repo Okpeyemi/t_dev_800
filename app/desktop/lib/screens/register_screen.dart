@@ -47,7 +47,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Photo Analysis App',
+                    'Ahouéfa',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,

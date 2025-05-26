@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Photo Analysis App',
+                    'Ahouéfa',
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,

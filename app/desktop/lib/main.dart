@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         builder: (context, themeProvider, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'Photo Analysis App',
+            title: 'Ahouéfa',
             
             // Thème clair
             theme: ThemeData(

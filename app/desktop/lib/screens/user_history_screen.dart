@@ -151,7 +151,7 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
     return Scaffold(
       // Utiliser le même CustomAppBar mais sans le bouton de retour automatique
       appBar: CustomAppBar(
-        title: 'Photo Analysis App',
+        title: 'Ahouéfa',
         automaticallyImplyLeading: false, // Désactive le bouton retour
       ),
       body: Column(

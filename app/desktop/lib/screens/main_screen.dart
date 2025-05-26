@@ -32,7 +32,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Photo Analysis App',
+        title: 'Ahouéfa',
         bottom: TabBar(
           controller: _tabController,
           tabs: [
