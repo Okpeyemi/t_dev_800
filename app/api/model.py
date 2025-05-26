@@ -13,7 +13,7 @@ class Model:
     def preprocess(self, image: bytes, image_size=(224, 224)) -> np.ndarray:
         image = Image.open(io.BytesIO(image)).convert("RGB")
         image = image.resize(image_size)
-        array = np.array(image).astype(np.float32)
+        array = np.array(image).astype(np.float32) / 255
         array = np.expand_dims(array, axis=0)
         return array
 
@@ -27,4 +27,4 @@ class Model:
             [self.output_name], {self.input_name: preprocessed_image}
         )
 
-        return str(result[0][0])  # Assuming the model returns a single value
+        return str(result[0][0][0])  # Assuming the model returns a single value
