@@ -5,24 +5,19 @@ import '../widgets/custom_app_bar.dart';
 import 'package:intl/intl.dart';
 
 // Définition du type d'historique
-enum HistoryType {
-  analyzed,
-  submitted
-}
+enum HistoryType { analyzed, submitted }
 
 class UserHistoryScreen extends StatefulWidget {
   final HistoryType historyType;
 
-  const UserHistoryScreen({
-    super.key,
-    required this.historyType,
-  });
+  const UserHistoryScreen({super.key, required this.historyType});
 
   @override
   _UserHistoryScreenState createState() => _UserHistoryScreenState();
 }
 
-class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTickerProviderStateMixin {
+class _UserHistoryScreenState extends State<UserHistoryScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   bool _isLoading = false;
   TextEditingController _searchController = TextEditingController();
@@ -34,10 +29,12 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
     {
       'id': '1',
       'date': DateTime.now().subtract(Duration(days: 2)),
-      'imagePath': '', // À remplacer par des chemins d'images réelles dans une vraie application
+      'imagePath':
+          '', // À remplacer par des chemins d'images réelles dans une vraie application
       'result': 'Pneumonie (87%)',
       'status': 'Terminé',
-      'details': 'Indications de pneumonie bactérienne dans le lobe inférieur droit.',
+      'details':
+          'Indications de pneumonie bactérienne dans le lobe inférieur droit.',
     },
     {
       'id': '2',
@@ -65,7 +62,7 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
       'diagnosis': 'Pneumonie',
       'status': 'En attente de révision',
       'priority': 'Élevée',
-      'notes': 'Patient de 65 ans avec symptômes respiratoires depuis 5 jours.'
+      'notes': 'Patient de 65 ans avec symptômes respiratoires depuis 5 jours.',
     },
     {
       'id': '2',
@@ -74,7 +71,7 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
       'diagnosis': 'Sain',
       'status': 'Validé',
       'priority': 'Normale',
-      'notes': 'Suivi de routine.'
+      'notes': 'Suivi de routine.',
     },
     {
       'id': '3',
@@ -83,7 +80,7 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
       'diagnosis': 'Pneumonie',
       'status': 'Validé',
       'priority': 'Élevée',
-      'notes': 'Patient de 42 ans avec antécédents d\'asthme.'
+      'notes': 'Patient de 42 ans avec antécédents d\'asthme.',
     },
   ];
 
@@ -91,10 +88,10 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      vsync: this, 
-      duration: Duration(milliseconds: 300)
+      vsync: this,
+      duration: Duration(milliseconds: 300),
     );
-    
+
     // Simuler le chargement des données
     _loadData();
   }
@@ -110,10 +107,10 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
     setState(() {
       _isLoading = true;
     });
-    
+
     // Simuler un délai réseau
     await Future.delayed(Duration(milliseconds: 800));
-    
+
     setState(() {
       _isLoading = false;
     });
@@ -121,29 +118,36 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
 
   List<Map<String, dynamic>> _getFilteredItems(bool isAnalyzed) {
     final items = isAnalyzed ? _analyzedImages : _submittedCases;
-    
+
     if (_searchQuery.isEmpty) {
       return items;
     }
-    
+
     return items.where((item) {
       if (isAnalyzed) {
-        return item['result'].toString().toLowerCase().contains(_searchQuery.toLowerCase()) ||
-               _formatDate(item['date']).contains(_searchQuery);
+        return item['result'].toString().toLowerCase().contains(
+              _searchQuery.toLowerCase(),
+            ) ||
+            _formatDate(item['date']).contains(_searchQuery);
       } else {
-        return item['diagnosis'].toString().toLowerCase().contains(_searchQuery.toLowerCase()) ||
-               item['status'].toString().toLowerCase().contains(_searchQuery.toLowerCase()) ||
-               _formatDate(item['date']).contains(_searchQuery);
+        return item['diagnosis'].toString().toLowerCase().contains(
+              _searchQuery.toLowerCase(),
+            ) ||
+            item['status'].toString().toLowerCase().contains(
+              _searchQuery.toLowerCase(),
+            ) ||
+            _formatDate(item['date']).contains(_searchQuery);
       }
     }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    final String pageTitle = widget.historyType == HistoryType.analyzed
-        ? 'Images Analysées'
-        : 'Cas Soumis';
-        
+    final String pageTitle =
+        widget.historyType == HistoryType.analyzed
+            ? 'Images Analysées'
+            : 'Cas Soumis';
+
     final bool isAnalyzed = widget.historyType == HistoryType.analyzed;
     final filteredItems = _getFilteredItems(isAnalyzed);
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
@@ -151,7 +155,7 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
     return Scaffold(
       // Utiliser le même CustomAppBar mais sans le bouton de retour automatique
       appBar: CustomAppBar(
-        title: 'Photo Analysis App',
+        title: 'ahouefa',
         automaticallyImplyLeading: false, // Désactive le bouton retour
       ),
       body: Column(
@@ -178,10 +182,7 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
                 Expanded(
                   child: Text(
                     pageTitle,
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                 ),
                 IconButton(
@@ -192,7 +193,7 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
               ],
             ),
           ),
-          
+
           // Barre de recherche
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -208,17 +209,18 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
                 filled: true,
                 fillColor: isDarkMode ? Colors.grey[800] : Colors.grey[200],
                 contentPadding: EdgeInsets.symmetric(vertical: 0),
-                suffixIcon: _searchQuery.isNotEmpty 
-                  ? IconButton(
-                      icon: Icon(Icons.clear),
-                      onPressed: () {
-                        setState(() {
-                          _searchController.clear();
-                          _searchQuery = '';
-                        });
-                      },
-                    )
-                  : null,
+                suffixIcon:
+                    _searchQuery.isNotEmpty
+                        ? IconButton(
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            setState(() {
+                              _searchController.clear();
+                              _searchQuery = '';
+                            });
+                          },
+                        )
+                        : null,
               ),
               onChanged: (value) {
                 setState(() {
@@ -227,55 +229,63 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
               },
             ),
           ),
-          
+
           Divider(),
-          
+
           // Contenu principal
           Expanded(
             child: RefreshIndicator(
               onRefresh: _loadData,
-              child: _isLoading 
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : filteredItems.isEmpty
-                  ? _buildEmptyState(isAnalyzed)
-                  : ListView.builder(
-                      padding: EdgeInsets.all(16),
-                      itemCount: filteredItems.length,
-                      itemBuilder: (context, index) {
-                        final item = filteredItems[index];
-                        // Utiliser une animation pour chaque élément de la liste
-                        return AnimatedBuilder(
-                          animation: _animationController,
-                          builder: (context, child) {
-                            return FadeTransition(
-                              opacity: Tween<double>(begin: 0.0, end: 1.0).animate(
-                                CurvedAnimation(
-                                  parent: _animationController,
-                                  curve: Interval((1 / filteredItems.length) * index, 1.0, 
-                                    curve: Curves.easeOut),
-                                ),
-                              ),
-                              child: SlideTransition(
-                                position: Tween<Offset>(
-                                  begin: Offset(0.5, 0.0),
-                                  end: Offset.zero,
+              child:
+                  _isLoading
+                      ? Center(child: CircularProgressIndicator())
+                      : filteredItems.isEmpty
+                      ? _buildEmptyState(isAnalyzed)
+                      : ListView.builder(
+                        padding: EdgeInsets.all(16),
+                        itemCount: filteredItems.length,
+                        itemBuilder: (context, index) {
+                          final item = filteredItems[index];
+                          // Utiliser une animation pour chaque élément de la liste
+                          return AnimatedBuilder(
+                            animation: _animationController,
+                            builder: (context, child) {
+                              return FadeTransition(
+                                opacity: Tween<double>(
+                                  begin: 0.0,
+                                  end: 1.0,
                                 ).animate(
                                   CurvedAnimation(
-                                    parent: _animationController, 
-                                    curve: Interval((1 / filteredItems.length) * index, 1.0, 
-                                      curve: Curves.easeOut),
+                                    parent: _animationController,
+                                    curve: Interval(
+                                      (1 / filteredItems.length) * index,
+                                      1.0,
+                                      curve: Curves.easeOut,
+                                    ),
                                   ),
                                 ),
-                                child: child,
-                              ),
-                            );
-                          },
-                          child: _buildHistoryItem(item, isAnalyzed),
-                        );
-                      },
-                    ),
+                                child: SlideTransition(
+                                  position: Tween<Offset>(
+                                    begin: Offset(0.5, 0.0),
+                                    end: Offset.zero,
+                                  ).animate(
+                                    CurvedAnimation(
+                                      parent: _animationController,
+                                      curve: Interval(
+                                        (1 / filteredItems.length) * index,
+                                        1.0,
+                                        curve: Curves.easeOut,
+                                      ),
+                                    ),
+                                  ),
+                                  child: child,
+                                ),
+                              );
+                            },
+                            child: _buildHistoryItem(item, isAnalyzed),
+                          );
+                        },
+                      ),
             ),
           ),
         ],
@@ -289,8 +299,13 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
             Navigator.pushNamed(context, '/submit_case');
           }
         },
-        child: Icon(isAnalyzed ? Icons.add_photo_alternate : Icons.create_new_folder),
-        tooltip: isAnalyzed ? 'Analyser une nouvelle image' : 'Soumettre un nouveau cas',
+        child: Icon(
+          isAnalyzed ? Icons.add_photo_alternate : Icons.create_new_folder,
+        ),
+        tooltip:
+            isAnalyzed
+                ? 'Analyser une nouvelle image'
+                : 'Soumettre un nouveau cas',
       ),
     );
   }
@@ -307,9 +322,7 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
           ),
           SizedBox(height: 24),
           Text(
-            isAnalyzed
-                ? 'Aucune image analysée'
-                : 'Aucun cas soumis',
+            isAnalyzed ? 'Aucune image analysée' : 'Aucun cas soumis',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w500,
@@ -321,10 +334,7 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
             isAnalyzed
                 ? 'Commencez par analyser une radiographie'
                 : 'Soumettez votre premier cas médical',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey[600],
-            ),
+            style: TextStyle(fontSize: 16, color: Colors.grey[600]),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 32),
@@ -337,7 +347,9 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
                 Navigator.pushNamed(context, '/submit_case');
               }
             },
-            icon: Icon(isAnalyzed ? Icons.add_a_photo : Icons.create_new_folder),
+            icon: Icon(
+              isAnalyzed ? Icons.add_a_photo : Icons.create_new_folder,
+            ),
             label: Text(
               isAnalyzed ? 'Analyser une image' : 'Soumettre un cas',
               style: TextStyle(fontSize: 16),
@@ -356,13 +368,11 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
 
   Widget _buildHistoryItem(Map<String, dynamic> item, bool isAnalyzed) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Card(
       margin: EdgeInsets.only(bottom: 16),
       elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: () => _showDetailDialog(item, isAnalyzed),
@@ -414,7 +424,9 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Fonctionnalité de partage à implémenter'),
+                          content: Text(
+                            'Fonctionnalité de partage à implémenter',
+                          ),
                           behavior: SnackBarBehavior.floating,
                         ),
                       );
@@ -447,7 +459,10 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
     );
   }
 
-  List<Widget> _buildAnalyzedContent(Map<String, dynamic> item, bool isDarkMode) {
+  List<Widget> _buildAnalyzedContent(
+    Map<String, dynamic> item,
+    bool isDarkMode,
+  ) {
     return [
       Container(
         height: 150,
@@ -486,12 +501,13 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
       Row(
         children: [
           Icon(
-            item['result'].contains('Pneumonie') 
-                ? Icons.sick 
+            item['result'].contains('Pneumonie')
+                ? Icons.sick
                 : Icons.health_and_safety,
-            color: item['result'].contains('Pneumonie') 
-                ? Colors.orange 
-                : Colors.green,
+            color:
+                item['result'].contains('Pneumonie')
+                    ? Colors.orange
+                    : Colors.green,
             size: 20,
           ),
           SizedBox(width: 8),
@@ -500,9 +516,10 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
-              color: item['result'].contains('Pneumonie') 
-                  ? Colors.orange[700] 
-                  : Colors.green[700],
+              color:
+                  item['result'].contains('Pneumonie')
+                      ? Colors.orange[700]
+                      : Colors.green[700],
             ),
           ),
         ],
@@ -510,7 +527,10 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
     ];
   }
 
-  List<Widget> _buildSubmittedContent(Map<String, dynamic> item, bool isDarkMode) {
+  List<Widget> _buildSubmittedContent(
+    Map<String, dynamic> item,
+    bool isDarkMode,
+  ) {
     return [
       Row(
         children: [
@@ -532,21 +552,19 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
             children: [
               Text(
                 'Nombre d\'images: ${item['images']}',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
               SizedBox(height: 4),
               Row(
                 children: [
                   Icon(
-                    item['diagnosis'] == 'Pneumonie' 
-                        ? Icons.sick 
+                    item['diagnosis'] == 'Pneumonie'
+                        ? Icons.sick
                         : Icons.health_and_safety,
-                    color: item['diagnosis'] == 'Pneumonie' 
-                        ? Colors.orange 
-                        : Colors.green,
+                    color:
+                        item['diagnosis'] == 'Pneumonie'
+                            ? Colors.orange
+                            : Colors.green,
                     size: 16,
                   ),
                   SizedBox(width: 4),
@@ -565,9 +583,10 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
                   Icon(
                     Icons.priority_high,
                     size: 16,
-                    color: item['priority'] == 'Élevée'
-                        ? Colors.red[400]
-                        : Colors.blue[400],
+                    color:
+                        item['priority'] == 'Élevée'
+                            ? Colors.red[400]
+                            : Colors.blue[400],
                   ),
                   SizedBox(width: 4),
                   Text(
@@ -588,7 +607,7 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
 
   void _showDetailDialog(Map<String, dynamic> item, bool isAnalyzed) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -620,14 +639,14 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
                   ],
                 ),
                 Divider(height: 24),
-                
+
                 // Contenu spécifique au type
                 if (isAnalyzed) ...[
                   _buildDetailRow('Date', _formatDateFull(item['date'])),
                   _buildDetailRow('Résultat', item['result']),
                   _buildDetailRow('Statut', item['status']),
                   _buildDetailRow('Détails', item['details']),
-                  
+
                   SizedBox(height: 16),
                   Container(
                     height: 200,
@@ -646,13 +665,16 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
                   ),
                 ] else ...[
                   _buildDetailRow('Date', _formatDateFull(item['date'])),
-                  _buildDetailRow('Nombre d\'images', item['images'].toString()),
+                  _buildDetailRow(
+                    'Nombre d\'images',
+                    item['images'].toString(),
+                  ),
                   _buildDetailRow('Diagnostic', item['diagnosis']),
                   _buildDetailRow('Statut', item['status']),
                   _buildDetailRow('Priorité', item['priority']),
                   _buildDetailRow('Notes', item['notes']),
                 ],
-                
+
                 SizedBox(height: 24),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -664,7 +686,9 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
                         Navigator.of(context).pop();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text('Fonctionnalité d\'impression à implémenter'),
+                            content: Text(
+                              'Fonctionnalité d\'impression à implémenter',
+                            ),
                             behavior: SnackBarBehavior.floating,
                           ),
                         );
@@ -711,14 +735,7 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> with SingleTicker
               ),
             ),
           ),
-          Expanded(
-            child: Text(
-              value,
-              style: TextStyle(
-                fontSize: 14,
-              ),
-            ),
-          ),
+          Expanded(child: Text(value, style: TextStyle(fontSize: 14))),
         ],
       ),
     );

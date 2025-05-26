@@ -23,10 +23,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    
+
     // Définir la largeur maximale des champs
     final inputWidth = size.width * 0.7; // 70% de la largeur de l'écran
-    
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -36,7 +36,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Form(
               key: _formKey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center, // Centre tous les widgets dans la colonne
+                crossAxisAlignment:
+                    CrossAxisAlignment
+                        .center, // Centre tous les widgets dans la colonne
                 children: [
                   // App Logo and Title
                   SizedBox(height: size.height * 0.02),
@@ -47,7 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Photo Analysis App',
+                    'ahouefa',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -57,13 +59,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: 8),
                   Text(
                     'Détection de pneumonie par IA',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey[600],
-                    ),
+                    style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                   ),
                   SizedBox(height: size.height * 0.04),
-                  
+
                   // Registration Form
                   Container(
                     width: inputWidth,
@@ -76,7 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  
+
                   // Username field
                   SizedBox(
                     width: inputWidth,
@@ -97,7 +96,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         filled: true,
-                        fillColor: isDarkMode ? Colors.grey[800] : Colors.grey[100],
+                        fillColor:
+                            isDarkMode ? Colors.grey[800] : Colors.grey[100],
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -108,7 +108,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  
+
                   // Email field
                   SizedBox(
                     width: inputWidth,
@@ -129,7 +129,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         filled: true,
-                        fillColor: isDarkMode ? Colors.grey[800] : Colors.grey[100],
+                        fillColor:
+                            isDarkMode ? Colors.grey[800] : Colors.grey[100],
                       ),
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
@@ -144,7 +145,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  
+
                   // Password field
                   SizedBox(
                     width: inputWidth,
@@ -156,7 +157,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         prefixIcon: Icon(Icons.lock_outline),
                         suffixIcon: IconButton(
                           icon: Icon(
-                            _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                            _obscurePassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
                           ),
                           onPressed: () {
                             setState(() {
@@ -175,7 +178,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         filled: true,
-                        fillColor: isDarkMode ? Colors.grey[800] : Colors.grey[100],
+                        fillColor:
+                            isDarkMode ? Colors.grey[800] : Colors.grey[100],
                       ),
                       obscureText: _obscurePassword,
                       validator: (value) {
@@ -190,7 +194,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  
+
                   // Confirm Password field
                   SizedBox(
                     width: inputWidth,
@@ -202,11 +206,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         prefixIcon: Icon(Icons.lock_outline),
                         suffixIcon: IconButton(
                           icon: Icon(
-                            _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
+                            _obscureConfirmPassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
                           ),
                           onPressed: () {
                             setState(() {
-                              _obscureConfirmPassword = !_obscureConfirmPassword;
+                              _obscureConfirmPassword =
+                                  !_obscureConfirmPassword;
                             });
                           },
                         ),
@@ -221,7 +228,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         filled: true,
-                        fillColor: isDarkMode ? Colors.grey[800] : Colors.grey[100],
+                        fillColor:
+                            isDarkMode ? Colors.grey[800] : Colors.grey[100],
                       ),
                       obscureText: _obscureConfirmPassword,
                       validator: (value) {
@@ -235,9 +243,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       },
                     ),
                   ),
-                  
+
                   const SizedBox(height: 24),
-                  
+
                   // Register Button
                   SizedBox(
                     width: inputWidth,
@@ -252,28 +260,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: _isLoading
-                          ? SizedBox(
-                              height: 24,
-                              width: 24,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 2,
+                      child:
+                          _isLoading
+                              ? SizedBox(
+                                height: 24,
+                                width: 24,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                              : Text(
+                                'S\'INSCRIRE',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.2,
+                                ),
                               ),
-                            )
-                          : Text(
-                              'S\'INSCRIRE',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1.2,
-                              ),
-                            ),
                     ),
                   ),
-                  
+
                   const Spacer(),
-                  
+
                   // Login Link
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -285,9 +294,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                         child: Text(
                           "Se connecter",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
@@ -329,7 +336,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               backgroundColor: Colors.red[700],
               behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
           );
         }

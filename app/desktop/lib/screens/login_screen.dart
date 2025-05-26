@@ -20,10 +20,10 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    
+
     // Définir la largeur maximale des champs
     final inputWidth = size.width * 0.7; // 70% de la largeur de l'écran
-    
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -33,7 +33,8 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Form(
               key: _formKey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center, // Centrer le contenu
+                crossAxisAlignment:
+                    CrossAxisAlignment.center, // Centrer le contenu
                 children: [
                   // App Logo and Title
                   SizedBox(height: size.height * 0.05),
@@ -44,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Photo Analysis App',
+                    'ahouefa',
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
@@ -54,13 +55,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 8),
                   Text(
                     'Détection de pneumonie par IA',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey[600],
-                    ),
+                    style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                   ),
                   SizedBox(height: size.height * 0.08),
-                  
+
                   // Login Form
                   Container(
                     width: inputWidth,
@@ -74,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  
+
                   // Email field
                   SizedBox(
                     width: inputWidth,
@@ -95,7 +93,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         filled: true,
-                        fillColor: isDarkMode ? Colors.grey[800] : Colors.grey[100],
+                        fillColor:
+                            isDarkMode ? Colors.grey[800] : Colors.grey[100],
                       ),
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
@@ -110,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  
+
                   // Password field
                   SizedBox(
                     width: inputWidth,
@@ -122,7 +121,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         prefixIcon: Icon(Icons.lock_outline),
                         suffixIcon: IconButton(
                           icon: Icon(
-                            _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                            _obscurePassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
                           ),
                           onPressed: () {
                             setState(() {
@@ -141,7 +142,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         filled: true,
-                        fillColor: isDarkMode ? Colors.grey[800] : Colors.grey[100],
+                        fillColor:
+                            isDarkMode ? Colors.grey[800] : Colors.grey[100],
                       ),
                       obscureText: _obscurePassword,
                       validator: (value) {
@@ -155,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                   ),
-                  
+
                   // Forgot password link
                   SizedBox(
                     width: inputWidth,
@@ -167,16 +169,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         child: Text(
                           'Mot de passe oublié?',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: TextStyle(fontWeight: FontWeight.w500),
                         ),
                       ),
                     ),
                   ),
-                  
+
                   const SizedBox(height: 24),
-                  
+
                   // Login Button
                   SizedBox(
                     width: inputWidth,
@@ -191,28 +191,29 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: _isLoading
-                          ? SizedBox(
-                              height: 24,
-                              width: 24,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 2,
+                      child:
+                          _isLoading
+                              ? SizedBox(
+                                height: 24,
+                                width: 24,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                              : Text(
+                                'SE CONNECTER',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.2,
+                                ),
                               ),
-                            )
-                          : Text(
-                              'SE CONNECTER',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1.2,
-                              ),
-                            ),
                     ),
                   ),
-                  
+
                   const Spacer(),
-                  
+
                   // Register Link
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -224,9 +225,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         child: Text(
                           "S'inscrire",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
@@ -267,7 +266,9 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               backgroundColor: Colors.red[700],
               behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
           );
         }

@@ -1,4 +1,4 @@
-# Photo Analysis App
+# ahouefa
 
 Une application mobile pour l'analyse de radiographies pulmonaires à des fins de détection de pneumonie.
 
@@ -35,3 +35,4 @@ flutter pub get
 
 # Exécuter l'application
 flutter run
+```

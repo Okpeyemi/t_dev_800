@@ -13,7 +13,8 @@ class MainScreen extends StatefulWidget {
   _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateMixin {
+class _MainScreenState extends State<MainScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -32,21 +33,18 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Photo Analysis App',
+        title: 'ahouefa',
         bottom: TabBar(
           controller: _tabController,
           tabs: [
-            Tab(text: 'Analyze Photo'),
-            Tab(text: 'Submit Case'),
+            Tab(text: 'Analyser des radios'),
+            Tab(text: 'Soumettre une prédiction'),
           ],
         ),
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [
-          AnalyzePhotoTab(),
-          SubmitCaseTab(),
-        ],
+        children: [AnalyzePhotoTab(), SubmitCaseTab()],
       ),
     );
   }

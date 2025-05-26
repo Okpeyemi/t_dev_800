@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
         builder: (context, themeProvider, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'Photo Analysis App',
-            
+            title: 'ahouefa',
+
             // Thème clair
             theme: ThemeData(
               brightness: Brightness.light,
@@ -36,21 +36,21 @@ class MyApp extends StatelessWidget {
               ),
               useMaterial3: true,
             ),
-            
+
             // Thème sombre
             darkTheme: ThemeData(
-              brightness: Brightness.dark,
+              brightness: Brightness.light,
               primarySwatch: Colors.blue,
               colorScheme: ColorScheme.fromSeed(
                 seedColor: Colors.blue,
-                brightness: Brightness.dark,
+                brightness: Brightness.light,
               ),
               useMaterial3: true,
             ),
-            
+
             // Utilise le thème selon le ThemeProvider
             themeMode: themeProvider.themeMode,
-            
+
             initialRoute: '/login',
             routes: {
               '/login': (context) => LoginScreen(),
@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
               '/main': (context) => MainScreen(),
             },
           );
-        }
+        },
       ),
     );
   }
