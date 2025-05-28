@@ -1,4 +1,4 @@
-import 'package:ahouefa/predict/screen.dart';
+import 'package:ahouefa/predict/widgets/predict_screen.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
@@ -29,5 +29,12 @@ class App extends StatelessWidget {
 }
 
 void main(List<String> args) {
-  runApp(MaterialApp(home: App()));
+  runApp(
+    MaterialApp(
+      home: App(),
+      theme: ThemeData(brightness: Brightness.light),
+      darkTheme: ThemeData(brightness: Brightness.dark),
+      themeMode: ThemeMode.dark,
+    ),
+  );
 }
