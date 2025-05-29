@@ -7,8 +7,8 @@ import numpy as np
 class Model:
     def __init__(self):
         self.session = onnxrt.InferenceSession("models/pneumonia_model.onnx")
-        self.input_name = self.session.get_inputs()[0].name
-        self.output_name = self.session.get_outputs()[0].name
+        self.input = self.session.get_inputs()[0]
+        self.output = self.session.get_outputs()[0]
 
     def preprocess(self, image: bytes, image_size=(224, 224)) -> np.ndarray:
         image = Image.open(io.BytesIO(image)).convert("RGB")
@@ -24,7 +24,7 @@ class Model:
 
         # Run inference
         result = self.session.run(
-            [self.output_name], {self.input_name: preprocessed_image}
+            [self.output.name], {self.input.name: preprocessed_image}
         )
 
-        return str(result[0][0][0])  # Assuming the model returns a single value
+        return str(result[0][0][0])
