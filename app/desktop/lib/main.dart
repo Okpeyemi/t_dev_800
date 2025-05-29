@@ -1,4 +1,4 @@
-import 'package:ahouefa/predict/widgets/predict_screen.dart';
+import 'package:ahouefa/ui/predict/widgets/predict_screen.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
