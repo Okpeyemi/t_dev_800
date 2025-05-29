@@ -53,7 +53,12 @@ class PredictScreen extends StatelessWidget {
                 child: LayoutBuilder(
                   builder: (context, constraints) {
                     return Clickable(
-                      onTap: null,
+                      onTap: () async {
+                        final prediction = await viewModel.predict(
+                          viewModel.image!,
+                        );
+                        print(prediction);
+                      },
                       child: SubmitButton(
                         width: constraints.maxWidth,
                         height: constraints.maxHeight,
