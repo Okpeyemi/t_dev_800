@@ -1,3 +1,4 @@
+import 'package:ahouefa/routes.dart';
 import 'package:ahouefa/ui/components.dart';
 import 'package:ahouefa/ui/core/ui/clickable.dart';
 import 'package:ahouefa/ui/core/ui/image_picker.dart';
@@ -53,7 +54,15 @@ class PredictScreen extends StatelessWidget {
                 child: LayoutBuilder(
                   builder: (context, constraints) {
                     return Clickable(
-                      onTap: null,
+                      onTap: () async {
+                        final prediction = await viewModel.predict(
+                          viewModel.image!,
+                        );
+                        if (!context.mounted) return;
+                        Navigator.of(context).push(
+                          Routes.predictionResultScreen(prediction: prediction),
+                        );
+                      },
                       child: SubmitButton(
                         width: constraints.maxWidth,
                         height: constraints.maxHeight,
