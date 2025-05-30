@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:ahouefa/domain/prediction.dart';
 import 'package:ahouefa/ui/core/ui/clickable.dart';
+import 'package:ahouefa/ui/prediction_result/widgets/receive_prediction_form.dart';
 import 'package:flutter/material.dart';
 
 class PredictionResultScreen extends StatelessWidget {
@@ -22,6 +23,7 @@ class PredictionResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textScheme = Theme.of(context).textTheme;
+    final isSmallScreen = MediaQuery.sizeOf(context).width < 600;
 
     return Scaffold(
       appBar: AppBar(),
@@ -81,7 +83,19 @@ class PredictionResultScreen extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Clickable(
-                  onTap: null,
+                  onTap: () async {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text("Formulaire de reception"),
+                          content: ReceivePredictionForm(
+                            width: isSmallScreen ? null : 300,
+                          ),
+                        );
+                      },
+                    );
+                  },
                   child: Text(
                     "Vous desirez recevoir ce résultat par email ?",
                     style: textScheme.bodyLarge,
