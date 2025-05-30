@@ -24,6 +24,7 @@ class PredictionResultScreen extends StatelessWidget {
     final textScheme = Theme.of(context).textTheme;
 
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: Center(
           child: Column(
