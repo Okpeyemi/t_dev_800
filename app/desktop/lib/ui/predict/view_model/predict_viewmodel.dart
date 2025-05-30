@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:ahouefa/domain/model.dart';
+import 'package:ahouefa/utils/logging.dart';
 import 'package:flutter/material.dart';
 
 class PredictViewmodel extends ChangeNotifier {
@@ -16,13 +17,16 @@ class PredictViewmodel extends ChangeNotifier {
     return model.predict(image);
   }
 
-  Future<void> setSelectedFile(File? file) async {
-    if (file != null) {
-      _selectionDir = file.absolute.parent.path;
-      _image = await file.readAsBytes();
-    } else {
-      _image = null;
-    }
+  Future<void> setSelectedFile(File file) async {
+    _selectionDir = file.absolute.parent.path;
+    _image = await file.readAsBytes();
+    logger.i("{NewImageSelected} selected file: ${file.path}");
+    notifyListeners();
+  }
+
+  void removeSelectedFile() {
+    _image = null;
+    logger.i("{CurrentSelectionRemoved}");
     notifyListeners();
   }
 }

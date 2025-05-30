@@ -32,14 +32,14 @@ class PredictScreen extends StatelessWidget {
                             ? Center(
                               child: ImageDisplay(
                                 image: viewModel.image!,
-                                onClose: () async {
-                                  viewModel.setSelectedFile(null);
+                                onClose: () {
+                                  viewModel.removeSelectedFile();
                                 },
                               ),
                             )
                             : ImagePicker(
                               onImagePicked: (imageFile) async {
-                                viewModel.setSelectedFile(imageFile);
+                                await viewModel.setSelectedFile(imageFile);
                               },
                               initialDir: viewModel.selectionDir,
                             ),

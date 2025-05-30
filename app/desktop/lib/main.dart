@@ -1,4 +1,5 @@
 import 'package:ahouefa/ui/predict/widgets/predict_screen.dart';
+import 'package:ahouefa/utils/logging.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
@@ -28,7 +29,8 @@ class App extends StatelessWidget {
   }
 }
 
-void main(List<String> args) {
+void main(List<String> args) async {
+  await initLogger();
   runApp(
     MaterialApp(
       home: App(),
