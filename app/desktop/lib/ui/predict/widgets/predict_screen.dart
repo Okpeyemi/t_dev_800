@@ -4,6 +4,7 @@ import 'package:ahouefa/ui/core/ui/clickable.dart';
 import 'package:ahouefa/ui/core/ui/image_picker.dart';
 import 'package:ahouefa/ui/predict/view_model/predict_viewmodel.dart';
 import 'package:ahouefa/ui/core/ui/image_display.dart';
+import 'package:ahouefa/utils/logging.dart';
 import 'package:flutter/material.dart';
 
 class PredictScreen extends StatelessWidget {
@@ -55,13 +56,31 @@ class PredictScreen extends StatelessWidget {
                   builder: (context, constraints) {
                     return Clickable(
                       onTap: () async {
-                        final prediction = await viewModel.predict(
-                          viewModel.image!,
-                        );
-                        if (!context.mounted) return;
-                        Navigator.of(context).push(
-                          Routes.predictionResultScreen(prediction: prediction),
-                        );
+                        try {
+                          final prediction = await viewModel.predict(
+                            viewModel.image!,
+                          );
+                          if (!context.mounted) return;
+                          Navigator.of(context).push(
+                            Routes.predictionResultScreen(
+                              prediction: prediction,
+                            ),
+                          );
+                        } catch (e) {
+                          if (!context.mounted) return;
+                          logger.e("Error during prediction: $e");
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                "Une erreur est survenue : $e",
+                                style: textTheme.bodyMedium!.copyWith(
+                                  color: colorScheme.onError,
+                                ),
+                              ),
+                              backgroundColor: colorScheme.error,
+                            ),
+                          );
+                        }
                       },
                       child: SubmitButton(
                         width: constraints.maxWidth,

@@ -1,7 +1,7 @@
 class Settings {
   static late String apiUrl;
 
-  static void setUp() {
+  static void init() {
     apiUrl = const String.fromEnvironment("API_URL");
   }
 }

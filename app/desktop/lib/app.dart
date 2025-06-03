@@ -20,7 +20,7 @@ class App extends StatelessWidget {
         body: TabBarView(
           children: [
             Padding(padding: const EdgeInsets.all(8.0), child: PredictScreen()),
-            Center(child: Text("Hey, I'm Parfait")),
+            Center(child: Text("Hey, I'm ahouefa !")),
           ],
         ),
       ),

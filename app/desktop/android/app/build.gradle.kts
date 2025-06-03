@@ -8,7 +8,7 @@ plugins {
 android {
     namespace = "workker.ahouefa"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = "27.0.12077973"
+    ndkVersion = flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -41,8 +41,4 @@ android {
 
 flutter {
     source = "../.."
-}
-
-dependencies {
-    implementation("org.tensorflow:tensorflow-lite-gpu-api:2.10.0")
 }
