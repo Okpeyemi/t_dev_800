@@ -1,34 +1,13 @@
-import 'package:ahouefa/ui/predict/widgets/predict_screen.dart';
+import 'package:ahouefa/app.dart';
+import 'package:ahouefa/config/settings.dart';
+import 'package:ahouefa/utils/storage.dart';
 import 'package:flutter/material.dart';
+import 'package:ahouefa/utils/logging.dart';
 
-class App extends StatelessWidget {
-  const App({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          bottom: const TabBar(
-            tabs: [
-              Tab(text: "Faire une prédiction"),
-              Tab(text: "Soumettre une prédiction"),
-            ],
-          ),
-        ),
-        body: TabBarView(
-          children: [
-            Padding(padding: const EdgeInsets.all(8.0), child: PredictScreen()),
-            Center(child: Text("Hey, I'm Parfait")),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-void main(List<String> args) {
+void main(List<String> args) async {
+  Settings.init();
+  await initLogger();
+  await Directories.init();
   runApp(
     MaterialApp(
       home: App(),

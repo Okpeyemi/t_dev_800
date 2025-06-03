@@ -1,8 +1,10 @@
+import 'package:ahouefa/routes.dart';
 import 'package:ahouefa/ui/components.dart';
 import 'package:ahouefa/ui/core/ui/clickable.dart';
 import 'package:ahouefa/ui/core/ui/image_picker.dart';
 import 'package:ahouefa/ui/predict/view_model/predict_viewmodel.dart';
 import 'package:ahouefa/ui/core/ui/image_display.dart';
+import 'package:ahouefa/utils/logging.dart';
 import 'package:flutter/material.dart';
 
 class PredictScreen extends StatelessWidget {
@@ -32,14 +34,14 @@ class PredictScreen extends StatelessWidget {
                             ? Center(
                               child: ImageDisplay(
                                 image: viewModel.image!,
-                                onClose: () async {
-                                  viewModel.setSelectedFile(null);
+                                onClose: () {
+                                  viewModel.removeSelectedFile();
                                 },
                               ),
                             )
                             : ImagePicker(
                               onImagePicked: (imageFile) async {
-                                viewModel.setSelectedFile(imageFile);
+                                await viewModel.setSelectedFile(imageFile);
                               },
                               initialDir: viewModel.selectionDir,
                             ),
@@ -53,7 +55,33 @@ class PredictScreen extends StatelessWidget {
                 child: LayoutBuilder(
                   builder: (context, constraints) {
                     return Clickable(
-                      onTap: null,
+                      onTap: () async {
+                        try {
+                          final prediction = await viewModel.predict(
+                            viewModel.image!,
+                          );
+                          if (!context.mounted) return;
+                          Navigator.of(context).push(
+                            Routes.predictionResultScreen(
+                              prediction: prediction,
+                            ),
+                          );
+                        } catch (e) {
+                          if (!context.mounted) return;
+                          logger.e("Error during prediction: $e");
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                "Une erreur est survenue : $e",
+                                style: textTheme.bodyMedium!.copyWith(
+                                  color: colorScheme.onError,
+                                ),
+                              ),
+                              backgroundColor: colorScheme.error,
+                            ),
+                          );
+                        }
+                      },
                       child: SubmitButton(
                         width: constraints.maxWidth,
                         height: constraints.maxHeight,
