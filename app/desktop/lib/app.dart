@@ -1,3 +1,4 @@
+import 'package:ahouefa/ui/annotate/widgets/annotate_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ahouefa/ui/predict/widgets/predict_screen.dart';
 
@@ -20,7 +21,10 @@ class App extends StatelessWidget {
         body: TabBarView(
           children: [
             Padding(padding: const EdgeInsets.all(8.0), child: PredictScreen()),
-            Center(child: Text("Hey, I'm ahouefa !")),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: AnnotateScreen(),
+            ),
           ],
         ),
       ),

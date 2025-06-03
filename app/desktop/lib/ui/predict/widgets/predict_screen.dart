@@ -2,7 +2,7 @@ import 'package:ahouefa/routes.dart';
 import 'package:ahouefa/ui/components.dart';
 import 'package:ahouefa/ui/core/ui/clickable.dart';
 import 'package:ahouefa/ui/core/ui/image_picker.dart';
-import 'package:ahouefa/ui/predict/view_model/predict_viewmodel.dart';
+import 'package:ahouefa/ui/predict/view_model/predict.dart';
 import 'package:ahouefa/ui/core/ui/image_display.dart';
 import 'package:ahouefa/utils/logging.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 class PredictScreen extends StatelessWidget {
   PredictScreen({super.key});
 
-  final PredictViewmodel viewModel = PredictViewmodel();
+  final PredictViewModel viewModel = PredictViewModel();
 
   @override
   Widget build(BuildContext context) {
