@@ -1,26 +1,28 @@
-import 'dart:math';
+import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:image/image.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
+import 'package:ahouefa/config/settings.dart';
+import 'package:http/http.dart' as http;
 
 class Model {
-  final Interpreter _interpreter;
-  Model._(Interpreter interpreter) : _interpreter = interpreter;
+  late final http.Client _client;
+  Model._() : _client = http.Client();
   static Model? _instance;
 
   static Future<Model> getInstance() async {
-    _instance ??= Model._(
-      await Interpreter.fromAsset("assets/models/predict.tflite"),
-    );
+    _instance ??= Model._();
     return _instance!;
   }
 
   Future<double> predict(Uint8List image) async {
-    var img = decodeImage(image);
-    var output = List.filled(1 * 3, 0).reshape([1, 3]);
-    _interpreter.run([img], output);
-
-    return Random().nextDouble();
+    var request = http.MultipartRequest("POST", Uri.parse(predictionUrl));
+    request.files.add(
+      http.MultipartFile.fromBytes("scan", image, filename: "scan.png"),
+    );
+    var response = await _client.send(request);
+    var payload = await response.stream.bytesToString();
+    return double.parse(jsonDecode(payload));
   }
+
+  String get predictionUrl => "${Settings.apiUrl}/api/predict";
 }

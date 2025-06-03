@@ -42,7 +42,7 @@ async def upload(request: Request):
 
 
 routes = [
-    Route("/predict", endpoint=predict, methods=["POST"]),
-    Route("/upload", endpoint=upload, methods=["POST"]),
+    Route("/api/predict", endpoint=predict, methods=["POST"]),
+    Route("/api/upload", endpoint=upload, methods=["POST"]),
 ]
 app = Starlette(routes=routes)
