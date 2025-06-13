@@ -3,6 +3,7 @@ import 'package:ahouefa/ui/core/ui/clickable.dart';
 import 'package:ahouefa/ui/core/ui/image_display.dart';
 import 'package:ahouefa/ui/core/ui/image_picker.dart';
 import 'package:ahouefa/ui/core/ui/submit_button.dart';
+import 'package:ahouefa/utils/logging.dart';
 import 'package:flutter/material.dart';
 
 class AnnotateScreen extends StatelessWidget {
@@ -20,7 +21,7 @@ class AnnotateScreen extends StatelessWidget {
           (context, _) => Column(
             children: [
               Expanded(
-                flex: 8,
+                flex: 7,
                 child: LayoutBuilder(
                   builder:
                       (context, constraints) => SizedBox(
@@ -45,27 +46,88 @@ class AnnotateScreen extends StatelessWidget {
                       ),
                 ),
               ),
-              Expanded(flex: 1, child: Container(color: Colors.amber)),
               Expanded(
-                flex: 1,
                 child: LayoutBuilder(
-                  builder:
-                      (context, constraints) => Clickable(
-                        onTap: null,
-                        child: SubmitButton(
-                          width: constraints.maxWidth,
-                          height: constraints.maxHeight,
-                          color: colorScheme.primary,
-                          child: Text(
-                            "Soumettre la prédiction",
-                            style: textTheme.bodyMedium!.copyWith(
-                              color: colorScheme.onPrimary,
+                  builder: (context, constraints) {
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: ListTile(
+                            title: Text("Normal"),
+                            leading: Radio(
+                              value: "NORMAL",
+                              groupValue: viewModel.diagnosis,
+                              onChanged: (value) {
+                                viewModel.setDiagnosis(value!);
+                              },
                             ),
                           ),
                         ),
-                      ),
+                        Expanded(
+                          child: ListTile(
+                            title: Text("Pneumonie"),
+                            leading: Radio(
+                              value: "PNEUMONIA",
+                              groupValue: viewModel.diagnosis,
+                              onChanged: (value) {
+                                viewModel.setDiagnosis(value!);
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
+              if (viewModel.image != null)
+                Expanded(
+                  flex: 1,
+                  child: LayoutBuilder(
+                    builder:
+                        (context, constraints) => Clickable(
+                          onTap:
+                              viewModel.image == null
+                                  ? null
+                                  : () async {
+                                    try {
+                                      await viewModel.submitAnnotation(
+                                        viewModel.image!,
+                                        viewModel.diagnosis,
+                                      );
+                                    } catch (e) {
+                                      if (!context.mounted) return;
+                                      logger.e("Error during submission: $e");
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            "Erreur lors de la soumission : $e",
+                                            style: textTheme.bodyMedium!
+                                                .copyWith(
+                                                  color: colorScheme.onError,
+                                                ),
+                                          ),
+                                          backgroundColor: colorScheme.error,
+                                        ),
+                                      );
+                                    }
+                                  },
+                          child: SubmitButton(
+                            width: constraints.maxWidth,
+                            height: constraints.maxHeight,
+                            color: colorScheme.primary,
+                            child: Text(
+                              "Soumettre la prédiction",
+                              style: textTheme.bodyMedium!.copyWith(
+                                color: colorScheme.onPrimary,
+                              ),
+                            ),
+                          ),
+                        ),
+                  ),
+                ),
             ],
           ),
     );

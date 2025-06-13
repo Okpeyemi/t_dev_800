@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:ahouefa/config/settings.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:ahouefa/config/settings.dart';
+import 'package:ahouefa/utils/client.dart';
+
 class Model {
-  late final http.Client _client;
-  Model._() : _client = http.Client();
+  final http.Client _client;
+  Model._() : _client = client;
   static Model? _instance;
 
   static Future<Model> getInstance() async {
