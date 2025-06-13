@@ -13,12 +13,12 @@ class FileSystem:
         self.root = Path(root).expanduser()
         inference_dir = self.root.joinpath("inference")
         inference_dir.mkdir(exist_ok=True)
-        for prediction in ALLOWED_DIAGNOSIS:
-            inference_dir.joinpath(prediction).mkdir(exist_ok=True)
+        for diagnosis in ALLOWED_DIAGNOSIS:
+            inference_dir.joinpath(diagnosis).mkdir(exist_ok=True)
 
-    async def save(self, content: bytes, prediction: str, ext: str):
+    async def save(self, content: bytes, diagnosis: str, ext: str):
         filename = self.get_unique_filename() + "." + ext
-        to = self.root.joinpath("inference", prediction, filename)
+        to = self.root.joinpath("inference", diagnosis, filename)
         await self.write(content, to)
 
     async def write(self, content: bytes, to: Path):

@@ -10,8 +10,8 @@ async def predict(request: Request):
     async with request.form(max_files=1) as form:
         try:
             image = form["scan"]
-            prediction = await usecases.predict(image)
-            return JSONResponse(prediction)
+            probability = await usecases.predict(image)
+            return JSONResponse(probability)
         except ValueError as e:
             return JSONResponse(e.args[0], status_code=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
