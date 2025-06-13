@@ -98,19 +98,9 @@ class AnnotateScreen extends StatelessWidget {
                                     } catch (e) {
                                       if (!context.mounted) return;
                                       logger.e("Error during submission: $e");
-                                      ScaffoldMessenger.of(
+                                      displaySubmissionError(
                                         context,
-                                      ).showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            "Erreur lors de la soumission : $e",
-                                            style: textTheme.bodyMedium!
-                                                .copyWith(
-                                                  color: colorScheme.onError,
-                                                ),
-                                          ),
-                                          backgroundColor: colorScheme.error,
-                                        ),
+                                        e.toString(),
                                       );
                                     }
                                   },
@@ -130,6 +120,21 @@ class AnnotateScreen extends StatelessWidget {
                 ),
             ],
           ),
+    );
+  }
+
+  void displaySubmissionError(context, String error) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          "Erreur lors de la soumission : $error",
+          style: textTheme.bodyMedium!.copyWith(color: colorScheme.onError),
+        ),
+        backgroundColor: colorScheme.error,
+      ),
     );
   }
 }

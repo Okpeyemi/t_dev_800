@@ -1,15 +1,11 @@
 import os
 import secrets
 import string
-from enum import Enum
 from datetime import datetime
 from pathlib import Path
 from typing import Generator
 
-
-class Prediction(str, Enum):
-    NORMAL = "normal"
-    PNEUMONIA = "pneumonia"
+from constants import ALLOWED_DIAGNOSIS
 
 
 class FileSystem:
@@ -17,12 +13,12 @@ class FileSystem:
         self.root = Path(root).expanduser()
         inference_dir = self.root.joinpath("inference")
         inference_dir.mkdir(exist_ok=True)
-        for prediction in Prediction:
+        for prediction in ALLOWED_DIAGNOSIS:
             inference_dir.joinpath(prediction).mkdir(exist_ok=True)
 
     async def save(self, content: bytes, prediction: str, ext: str):
         filename = self.get_unique_filename() + "." + ext
-        to = self.root.joinpath("inference", Prediction(prediction), filename)
+        to = self.root.joinpath("inference", prediction, filename)
         await self.write(content, to)
 
     async def write(self, content: bytes, to: Path):
