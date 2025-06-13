@@ -31,5 +31,10 @@ class AnnotateViewModel extends ChangeNotifier with FileSelectorViewModel {
     }
   }
 
+  void reset() {
+    _diagnosis = "NORMAL";
+    removeSelectedFile();
+  }
+
   String get annotationUrl => "${Settings.apiUrl}/api/annotate";
 }

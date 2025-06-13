@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
+
 import 'package:ahouefa/ui/annotate/view_model/annotate.dart';
 import 'package:ahouefa/ui/core/ui/clickable.dart';
 import 'package:ahouefa/ui/core/ui/image_display.dart';
 import 'package:ahouefa/ui/core/ui/image_picker.dart';
 import 'package:ahouefa/ui/core/ui/submit_button.dart';
 import 'package:ahouefa/utils/logging.dart';
-import 'package:flutter/material.dart';
 
 class AnnotateScreen extends StatelessWidget {
   final AnnotateViewModel viewModel;
@@ -95,6 +96,9 @@ class AnnotateScreen extends StatelessWidget {
                                         viewModel.image!,
                                         viewModel.diagnosis,
                                       );
+                                      viewModel.reset();
+                                      if (!context.mounted) return;
+                                      displaySubmissionSuccess(context);
                                     } catch (e) {
                                       if (!context.mounted) return;
                                       logger.e("Error during submission: $e");
@@ -134,6 +138,21 @@ class AnnotateScreen extends StatelessWidget {
           style: textTheme.bodyMedium!.copyWith(color: colorScheme.onError),
         ),
         backgroundColor: colorScheme.error,
+      ),
+    );
+  }
+
+  void displaySubmissionSuccess(context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          "Soumission réussie !",
+          style: textTheme.bodyMedium!.copyWith(color: colorScheme.onPrimary),
+        ),
+        backgroundColor: colorScheme.primary,
       ),
     );
   }
