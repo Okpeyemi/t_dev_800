@@ -14,6 +14,7 @@ void main(List<String> args) async {
       theme: ThemeData(brightness: Brightness.light),
       darkTheme: ThemeData(brightness: Brightness.dark),
       themeMode: ThemeMode.dark,
+      debugShowCheckedModeBanner: false,
     ),
   );
 }
