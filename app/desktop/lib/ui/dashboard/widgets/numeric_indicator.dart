@@ -4,6 +4,7 @@ class NumericIndicator extends StatelessWidget {
   final Widget label;
   final Widget value;
   const NumericIndicator({super.key, required this.label, required this.value});
+
   @override
   Widget build(BuildContext context) {
     return Card(
