@@ -13,12 +13,12 @@ class PredictViewModel extends ChangeNotifier with FileSelectorViewModel {
   Future<Prediction> predict(Uint8List image) async {
     var model = await Model.getInstance();
     final prediction = Prediction(
-      imagePath: "",
+      imageUrl: "",
       score: await model.predict(image),
     );
     final filename = _randomFilename();
-    prediction.imagePath = "${Directories.predictions.path}/$filename";
-    File(prediction.imagePath).writeAsBytes(image);
+    prediction.imageUrl = "${Directories.predictions.path}/$filename";
+    File(prediction.imageUrl).writeAsBytes(image);
     logger.i("{PredictionMade} score: ${prediction.score}");
     return prediction;
   }

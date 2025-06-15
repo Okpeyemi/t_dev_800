@@ -1,6 +1,6 @@
 class Prediction {
-  String imagePath;
+  String imageUrl;
   double score;
 
-  Prediction({required this.imagePath, required this.score});
+  Prediction({required this.imageUrl, required this.score});
 }

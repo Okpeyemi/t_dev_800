@@ -64,7 +64,7 @@ class PredictionResultScreen extends StatelessWidget {
                           builder: (context) {
                             return AlertDialog(
                               title: const Text("Revoir l'image"),
-                              content: Image.file(File(prediction.imagePath)),
+                              content: Image.file(File(prediction.imageUrl)),
                               actions: [
                                 TextButton(
                                   onPressed: () => Navigator.pop(context),

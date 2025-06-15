@@ -52,20 +52,30 @@ class DashboardScreen extends StatelessWidget {
                           child: Row(
                             children: [
                               Expanded(
-                                child: NumericIndicator(
-                                  label: const Text('Total Predictions'),
+                                child: TextIndicator(
+                                  label: const Text(
+                                    'Nb de prediction sur 7jrs (nb de malades)',
+                                  ),
                                   value: Text(
-                                    '123',
-                                    style: textTheme.bodyLarge,
+                                    '123 (12)',
+                                    style: textTheme.titleLarge,
                                   ),
                                 ),
                               ),
                               Expanded(
-                                child: NumericIndicator(
-                                  label: const Text('Total Predictions'),
+                                child: TextIndicator(
+                                  color: Colors.greenAccent[100],
+                                  label: Text(
+                                    'Risque de pandémie',
+                                    style: textTheme.bodyMedium!.copyWith(
+                                      color: Colors.black,
+                                    ),
+                                  ),
                                   value: Text(
-                                    '123',
-                                    style: textTheme.bodyLarge,
+                                    'FAIBLE',
+                                    style: textTheme.titleLarge!.copyWith(
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -88,18 +98,19 @@ class DashboardScreen extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                          child: LayoutBuilder(
-                            builder:
-                                (context, constraints) => SizedBox(
-                                  width: constraints.maxWidth,
-                                  child: NumericIndicator(
-                                    label: const Text('Total Predictions'),
-                                    value: Text(
-                                      '123',
-                                      style: textTheme.bodyLarge,
-                                    ),
-                                  ),
-                                ),
+                          child: ListView(
+                            children: List.generate(
+                              8,
+                              (i) => ListTile(
+                                title: Text('Patient ${i + 1}'),
+                                subtitle: Text('Absence de pneumonie (6%)'),
+                                trailing: Text("2025-06-12"),
+                                onTap: () {
+                                  // Navigate to prediction result screen
+                                  // Navigator.push(context, Routes.predictionResultScreen(prediction: prediction));
+                                },
+                              ),
+                            ),
                           ),
                         ),
                       ],
