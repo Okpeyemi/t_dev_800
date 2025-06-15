@@ -11,14 +11,15 @@ from constants import ALLOWED_DIAGNOSIS
 class FileSystem:
     def __init__(self, root: str):
         self.root = Path(root).expanduser()
-        inference_dir = self.root.joinpath("inference")
-        inference_dir.mkdir(exist_ok=True)
-        for diagnosis in ALLOWED_DIAGNOSIS:
-            inference_dir.joinpath(diagnosis).mkdir(exist_ok=True)
+        for action in ["annotation", "inference"]:
+            action_dir = self.root.joinpath(action)
+            action_dir.mkdir(exist_ok=True)
+            for diagnosis in ALLOWED_DIAGNOSIS:
+                action_dir.joinpath(diagnosis).mkdir(exist_ok=True)
 
-    async def save(self, content: bytes, diagnosis: str, ext: str) -> Path:
+    async def save(self, content: bytes, action, diagnosis: str, ext: str) -> Path:
         filename = self.get_unique_filename() + "." + ext
-        to = self.root.joinpath("inference", diagnosis, filename)
+        to = self.root.joinpath(action, diagnosis, filename)
         await self.write(content, to)
         return to.relative_to(self.root)
 

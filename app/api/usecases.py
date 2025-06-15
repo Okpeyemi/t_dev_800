@@ -17,7 +17,9 @@ async def predict(image: UploadFile):
     image_content = await image.read()
     probability = model.predict(image_content)
     diagnosis = "PNEUMONIA" if probability > 0.5 else "NORMAL"
-    filepath = await FS.save(image_content, diagnosis, image.filename.split(".")[-1])
+    filepath = await FS.save(
+        image_content, "inference", diagnosis, image.filename.split(".")[-1]
+    )
     repository.insert_action(
         Action(
             id=repository.next_id(),
@@ -40,8 +42,8 @@ async def annotate(image: UploadFile, diagnosis: str):
     if not is_image(image.filename):
         raise ValueError("You should submit an image for annotation")
     ext = image.filename.split(".")[-1]
-    filepath = await FS.save(await image.read(), diagnosis, ext)
-    await repository.insert_action(
+    filepath = await FS.save(await image.read(), "annotation", diagnosis, ext)
+    repository.insert_action(
         Action(
             id=repository.next_id(),
             kind="annotate",
