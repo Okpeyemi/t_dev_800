@@ -16,10 +16,11 @@ class FileSystem:
         for diagnosis in ALLOWED_DIAGNOSIS:
             inference_dir.joinpath(diagnosis).mkdir(exist_ok=True)
 
-    async def save(self, content: bytes, diagnosis: str, ext: str):
+    async def save(self, content: bytes, diagnosis: str, ext: str) -> Path:
         filename = self.get_unique_filename() + "." + ext
         to = self.root.joinpath("inference", diagnosis, filename)
         await self.write(content, to)
+        return to.relative_to(self.root)
 
     async def write(self, content: bytes, to: Path):
         with to.open("wb") as stream:
