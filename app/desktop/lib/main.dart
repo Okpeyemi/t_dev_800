@@ -8,13 +8,5 @@ void main(List<String> args) async {
   Settings.init();
   await initLogger();
   await Directories.init();
-  runApp(
-    MaterialApp(
-      home: App(),
-      theme: ThemeData(brightness: Brightness.light),
-      darkTheme: ThemeData(brightness: Brightness.dark),
-      themeMode: ThemeMode.dark,
-      debugShowCheckedModeBanner: false,
-    ),
-  );
+  runApp(App());
 }
