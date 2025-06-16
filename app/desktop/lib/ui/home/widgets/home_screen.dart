@@ -1,3 +1,4 @@
+import 'package:ahouefa/app.dart';
 import 'package:ahouefa/routes.dart';
 import 'package:ahouefa/ui/annotate/widgets/annotate_screen.dart';
 import 'package:ahouefa/ui/shared/widgets/logo.dart';
@@ -15,6 +16,15 @@ class HomeScreen extends StatelessWidget {
         appBar: AppBar(
           leading: Logo(),
           actions: [
+            IconButton(
+              onPressed: () {
+                App.isDarkMode.value = !App.isDarkMode.value;
+              },
+              icon:
+                  App.isDarkMode.value
+                      ? Icon(Icons.light_mode)
+                      : Icon(Icons.dark_mode),
+            ),
             IconButton(
               onPressed: () {
                 Navigator.push(context, Routes.dashboard());

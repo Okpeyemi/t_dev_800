@@ -19,6 +19,7 @@ class DashboardScreen extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
+        title: Text("Statistiques", style: textTheme.headlineMedium),
       ),
       body:
           onSmallScreen
