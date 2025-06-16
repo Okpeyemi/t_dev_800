@@ -8,5 +8,5 @@ class Action:
     kind: str
     diagnosis: str
     image_path: str
+    timestamp: dt
     probability: float | None = None
-    timestamp: dt = dt.now()

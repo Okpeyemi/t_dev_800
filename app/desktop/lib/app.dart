@@ -1,4 +1,4 @@
-import 'package:ahouefa/ui/dashboard/widgets/dashboard_screen.dart';
+import 'package:ahouefa/ui/home/widgets/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class App extends MaterialApp {
@@ -9,6 +9,6 @@ class App extends MaterialApp {
         darkTheme: ThemeData(brightness: Brightness.dark),
         themeMode: ThemeMode.dark,
         debugShowCheckedModeBanner: false,
-        home: DashboardScreen(),
+        home: HomeScreen(),
       );
 }

@@ -12,7 +12,14 @@ class DashboardScreen extends StatelessWidget {
     final onSmallScreen = MediaQuery.sizeOf(context).width <= 600;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Dashboard')),
+      appBar: AppBar(
+        leading: GestureDetector(
+          child: Icon(Icons.arrow_back, size: 44),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body:
           onSmallScreen
               ? Column(
@@ -57,7 +64,7 @@ class DashboardScreen extends StatelessWidget {
                                     'Nb de prediction sur 7jrs (nb de malades)',
                                   ),
                                   value: Text(
-                                    '123 (12)',
+                                    '123 (2)',
                                     style: textTheme.titleLarge,
                                   ),
                                 ),

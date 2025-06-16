@@ -1,3 +1,5 @@
+from datetime import datetime as dt
+
 from starlette.datastructures import UploadFile
 
 from constants import ALLOWED_DIAGNOSIS
@@ -27,6 +29,7 @@ async def predict(image: UploadFile):
             diagnosis=diagnosis,
             image_path=filepath,
             probability=probability,
+            timestamp=dt.now(),
         )
     )
     return {
@@ -49,6 +52,7 @@ async def annotate(image: UploadFile, diagnosis: str):
             kind="annotate",
             diagnosis=diagnosis,
             image_path=filepath,
+            timestamp=dt.now(),
         )
     )
 

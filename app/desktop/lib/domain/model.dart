@@ -23,7 +23,7 @@ class Model {
     );
     var response = await _client.send(request);
     var payload = await response.stream.bytesToString();
-    return double.parse(jsonDecode(payload));
+    return jsonDecode(payload) as double;
   }
 
   String get predictionUrl => "${Settings.apiUrl}/api/predict";

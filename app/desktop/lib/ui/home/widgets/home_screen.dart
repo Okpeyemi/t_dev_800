@@ -1,4 +1,6 @@
+import 'package:ahouefa/routes.dart';
 import 'package:ahouefa/ui/annotate/widgets/annotate_screen.dart';
+import 'package:ahouefa/ui/shared/widgets/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:ahouefa/ui/predict/widgets/predict_screen.dart';
 
@@ -11,10 +13,12 @@ class HomeScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          leading: Icon(Icons.abc, size: 44),
+          leading: Logo(),
           actions: [
             IconButton(
-              onPressed: null,
+              onPressed: () {
+                Navigator.push(context, Routes.dashboard());
+              },
               icon: const Icon(Icons.dashboard, size: 24),
             ),
             IconButton(
